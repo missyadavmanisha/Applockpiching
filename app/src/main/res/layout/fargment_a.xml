@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="120sp"
+
+           android:orientation="vertical">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="60sp"
+               android:padding="10dp"
+               android:orientation="horizontal">
+
+               <ImageView
+                   android:layout_width="30sp"
+                   android:layout_height="50sp"
+                   android:background="#349b0c"
+                   android:src="@drawable/ic_vault_image"
+                   android:id="@+id/image_vault"/>
+               <Button
+                   android:layout_width="0dp"
+                   android:layout_height="50sp"
+                   android:id="@+id/button_vault"
+                   android:layout_weight="1"
+                   android:background="#349b0c"
+                   android:text="Vault"
+                   android:textColor="#ffffff"
+                   android:paddingRight="45sp"/>
+
+
+
+               <ImageView
+                   android:layout_marginLeft="15sp"
+                   android:layout_width="30sp"
+                   android:layout_height="50sp"
+                   android:background="#e50606"
+                   android:src="@drawable/ic_chamber_door"
+                   android:id="@+id/image_chamber"/>
+               <Button
+                   android:layout_width="0dp"
+                   android:layout_height="50sp"
+                   android:id="@+id/button_chamber"
+                   android:layout_weight="1"
+                   android:background="#e50606"
+                   android:text="Chamber"
+                   android:textColor="#ffffff"
+                   android:paddingRight="50sp"/>
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="60sp"
+               android:paddingRight="10sp"
+               android:orientation="horizontal">
+
+               <ImageView
+                   android:layout_width="30sp"
+                   android:layout_height="50sp"
+
+                   android:background="#ef9037"
+                   android:src="@drawable/ic_powersavingmode"
+                   android:id="@+id/image_batterysaving"/>
+               <Button
+                   android:layout_width="0dp"
+                   android:layout_height="50sp"
+                   android:id="@+id/button_batterysaving"
+                   android:layout_weight="1"
+                   android:background="#ef9037"
+                   android:text="Battery save"
+                   android:textColor="#ffffff"
+                   android:paddingRight="30sp"/>
+
+
+
+               <ImageView
+                   android:layout_marginLeft="15sp"
+                   android:layout_width="30sp"
+                   android:layout_height="50sp"
+                   android:background="#e50606"
+                   android:src="@drawable/ic_more"
+                   android:id="@+id/image_more"/>
+               <Button
+                   android:layout_width="0dp"
+                   android:layout_height="50sp"
+                   android:id="@+id/button_more"
+                   android:layout_weight="1"
+                   android:background="#e50606"
+                   android:text="More"
+                   android:textColor="#ffffff"
+                   android:paddingRight="50sp"/>
+
+           </LinearLayout>
+
+
+       </LinearLayout>
+
+       <android.support.v7.widget.RecyclerView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/my_recycler_view">
+
+       </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
