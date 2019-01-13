@@ -1,6 +1,8 @@
 package com.codingblocks.applock;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -8,15 +10,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -25,6 +24,8 @@ public class SplashActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 1000;
     SharedPreferences sharedPreferences;
     Context context;
+    NotificationManager notificationManager;
+    String channel_id="Channel";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +33,17 @@ public class SplashActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
+        notificationManager=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel=new NotificationChannel(channel_id,"fore",notificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+        Intent intent =new Intent(getBaseContext(),Serviceforeground.class);
+        ContextCompat.startForegroundService(getBaseContext(),intent);
+
+
         /****************************** too much important don't miss it *****************************/
-        startService(new Intent(SplashActivity.this, AppCheckServices.class));
+       /* startService(new Intent(SplashActivity.this, AppCheckServices.class));
 
         try {
             Intent alarmIntent = new Intent(context, AlarmReceiver.class);
@@ -48,8 +58,8 @@ public class SplashActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /***************************************************************************************/
-
+        *//***************************************************************************************//*
+*/
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setBackgroundColor(getResources().getColor(R.color.primary_dark));
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -61,40 +71,58 @@ public class SplashActivity extends AppCompatActivity {
         textView.setText(getResources().getString(R.string.app_name));
         textView.setTextColor(getResources().getColor(R.color.white));
         textView.setTextSize(32);
-        textView.setGravity(Gravity.CENTER);
+        // textView.setGravity(Gravity.CENTE);
+        textView.setPadding(70, 100, 60, 20);
         linearLayout.addView(textView);
 
         ImageView imageView = new ImageView(this);
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.facebook));
+        imageView.setImageDrawable(getResources().getDrawable(R.drawable.applockicon));
         linearLayout.addView(imageView);
 
         setContentView(linearLayout);
         sharedPreferences = getSharedPreferences(APPLockConstants.MyPREFERENCES, MODE_PRIVATE);
-        final boolean isPasswordSet = sharedPreferences.getBoolean(APPLockConstants.IS_PASSWORD_SET, false);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (isPasswordSet) {
-                    Intent i = new Intent(SplashActivity.this, PasswordActivity.class);
-                    startActivity(i);
-                } else {
-                    Intent i = new Intent(SplashActivity.this, PasswordSetActivity.class);
-                    startActivity(i);
+        boolean ispinviewenabled = sharedPreferences.getBoolean(APPLockConstants.Is_PIN_ENABLED, false);
+        if (ispinviewenabled==false) {
+            final boolean isPasswordSet = sharedPreferences.getBoolean(APPLockConstants.IS_PASSWORD_SET, false);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (isPasswordSet) {
+                        Intent i = new Intent(SplashActivity.this, PasswordActivity.class);
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(SplashActivity.this, PasswordSetActivity.class);
+                        startActivity(i);
+                    }
+                    finish();
                 }
-                finish();
-            }
-        }, SPLASH_TIME_OUT);
+            }, SPLASH_TIME_OUT);
 
-        //Google Analytics
-        Tracker t = ((AppLockApplication) getApplication()).getTracker(AppLockApplication.TrackerName.APP_TRACKER);
-        t.setScreenName(APPLockConstants.SPLASH_SCREEN);
-        t.send(new HitBuilders.AppViewBuilder().build());
 
+        } else {
+            final boolean ispinset = sharedPreferences.getBoolean(APPLockConstants.IS_PIN_ENTERED, false);
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    if (ispinset) {
+                        Intent i = new Intent(SplashActivity.this, pinview.class);
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(SplashActivity.this, PinViewset.class);
+                        startActivity(i);
+                    }
+                    finish();
+                }
+            },SPLASH_TIME_OUT);
+
+
+        }
     }
 
     @Override
     protected void onStart() {
-        GoogleAnalytics.getInstance(context).reportActivityStart(this);
         super.onStart();
     }
 
@@ -105,9 +133,8 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        GoogleAnalytics.getInstance(context).reportActivityStop(this);
         super.onStop();
-        super.onStop();
+
     }
 }
 

@@ -37,11 +37,6 @@ public class PasswordRecoveryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         setContentView(R.layout.activity_recovery_password);
-        //Google Analytics
-        Tracker t = ((AppLockApplication) getApplication()).getTracker(AppLockApplication.TrackerName.APP_TRACKER);
-        t.setScreenName(APPLockConstants.PASSWORD_RECOVERY_SCREEN);
-        t.send(new HitBuilders.AppViewBuilder().build());
-
         confirmButton = (Button) findViewById(R.id.confirmButton);
         questionsSpinner = (Spinner) findViewById(R.id.questionsSpinner);
         answer = (EditText) findViewById(R.id.answer);

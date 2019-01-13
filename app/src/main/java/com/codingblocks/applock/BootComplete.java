@@ -7,14 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-/**
- * Created by amitshekhar on 28/04/15.
- */
+
 public class BootComplete extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("football ", "BootComplete");
-        context.startService(new Intent(context, AppCheckServices.class));
+        context.startService(new Intent(context, Serviceforeground.class));
 
           /*-------alarm setting after boot again--------*/
         Intent alarmIntent = new Intent(context, AlarmReceiver.class);

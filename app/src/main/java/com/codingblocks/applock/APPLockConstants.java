@@ -20,4 +20,19 @@ public class APPLockConstants {
     public static final String PASSWORD_RECOVER_SET_SCREEN = "password_recover_set_screen";
     public static final String PASSWORD_RECOVERY_SCREEN = "password_recovery_screen";
     public static final String NEW_APP_INSTALL_DIALOG_BOX = "new_app_install_dialog_box";
+    public static final String IS_ENAIL_ENTERED="is_email";
+    public static final String IS_BATERY_ACTIVATE="is_activate";
+    public static final String IS_PIN_="is_pin";
+    public static final String IS_PIN_ENTERED="is_pin_enterned";
+    public static final String Is_PIN_ENABLED ="is_pin_enabled";
+    public static final String IS_USAGE_SETTING="is_using_setting";
+    public  static final String IS_VIBRATE_AVILABLE="is_vibrate";
+    public static final String IS_INTRUDER_CHECK="is_intruder";
+    public static final String NO_OF_TIMES_PASSWORD_FALSE="is_false";
+    public  static final String IS_SWITCH="is_switch";
+    public  static final String IS_LOCK_NEW_APP="is_new_app";
+    public static final String IS_PROFILE_ADD="is_add_profile";
+    public static final String IS_CHOOSE_LANGUAGE="is_language";
+    public static final String IS_LOCK_CONVIENCE="is_convience";
+
 }

@@ -8,19 +8,33 @@
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+     <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND"/>
+
+
+
 
 
     <application
-        android:name=".AppLockApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/applock"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:manageSpaceActivity=".ManageSpaceActivity"
         android:theme="@style/AppTheme">
         <activity android:name=".SettingsActivity"/>
-        <activity android:name=".webview"/>
+        <activity android:name=".webview"
+
+            />
+        <activity android:name=".pinview"/>
+        <activity android:name=".PinViewset"/>
+
+
         <activity android:name=".Chamberclass"/>
         <activity android:name=".MoreActivity"/>
         <activity android:name=".Vault"/>
@@ -30,10 +44,11 @@
         </receiver>
 
 
-        <service
+       <!-- <service
             android:name=".AppCheckServices"
-            android:exported="false" />
-
+            android:exported="false" />-->
+<service android:name=".Serviceforeground"
+    android:exported="false" />
         <activity
             android:name=".SplashActivity"
             android:excludeFromRecents="true"
@@ -105,6 +120,21 @@
             android:excludeFromRecents="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"></activity>
+          <activity android:name=".PrivateSns"/>
+        <receiver android:name=".PhoneUnlockedReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+
+            </intent-filter>
+        </receiver>
+
+         <activity android:name=".unblocksetting"/>
+        <activity android:name=".Sequarityclass"/>
+<activity android:name=".picturered"/>
+<activity android:name=".intruderselfie"/>
 
 
     </application>

@@ -37,10 +37,6 @@ public class PasswordRecoverSetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         setContentView(R.layout.activity_recover_set_password);
-        //Google Analytics
-        Tracker t = ((AppLockApplication) getApplication()).getTracker(AppLockApplication.TrackerName.APP_TRACKER);
-        t.setScreenName(APPLockConstants.PASSWORD_RECOVER_SET_SCREEN);
-        t.send(new HitBuilders.AppViewBuilder().build());
 
         confirmButton = (Button) findViewById(R.id.confirmButton);
         questionsSpinner = (Spinner) findViewById(R.id.questionsSpinner);
@@ -59,7 +55,7 @@ public class PasswordRecoverSetActivity extends AppCompatActivity {
         list.add("Who is your favorite cricketer?");
         list.add("Who is your favorite footballer?");
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,list);
         stringArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         questionsSpinner.setAdapter(stringArrayAdapter);
 

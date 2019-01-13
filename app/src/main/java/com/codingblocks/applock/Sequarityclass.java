@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 public class Sequarityclass extends AppCompatActivity {
     @Override
@@ -17,8 +18,9 @@ public class Sequarityclass extends AppCompatActivity {
             startActivity(intent);
 
         }
-        if(i.hasExtra("sequaritysetting"))
+         if(i.hasExtra("sequaritysetting"))
         {
+            Log.e("AAAAAS","pass");
             Intent intent=new Intent(Sequarityclass.this,PasswordRecoverSetActivity.class);
             startActivity(intent) ;
         }

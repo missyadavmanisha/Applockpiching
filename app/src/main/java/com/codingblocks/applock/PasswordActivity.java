@@ -22,30 +22,44 @@ public class PasswordActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     Context context;
     Button forgetPassword;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         setContentView(R.layout.activity_password);
-        //Google Analytics
-        Tracker t = ((AppLockApplication) getApplication()).getTracker(AppLockApplication.TrackerName.APP_TRACKER);
-        t.setScreenName(APPLockConstants.PASSWORD_CHECK_SCREEN);
-        t.send(new HitBuilders.AppViewBuilder().build());
 
-        forgetPassword = (Button) findViewById(R.id.forgetPassword);
+              forgetPassword = (Button) findViewById(R.id.forgetPassword);
         lock9View = (Lock9View) findViewById(R.id.lock_9_view);
         sharedPreferences = getSharedPreferences(APPLockConstants.MyPREFERENCES, MODE_PRIVATE);
+        editor=sharedPreferences.edit();
+
         lock9View.setCallBack(new Lock9View.CallBack() {
             @Override
             public void onFinish(String password) {
                 if (sharedPreferences.getString(APPLockConstants.PASSWORD, "").matches(password)) {
                     Toast.makeText(getApplicationContext(), "Success : Password Match", Toast.LENGTH_SHORT).show();
+                    editor.putInt(APPLockConstants.NO_OF_TIMES_PASSWORD_FALSE,0);
+                    editor.apply();
                     Intent i = new Intent(PasswordActivity.this, LoadingActivity.class);
                     startActivity(i);
 
                   //  AppLockLogEvents.logEvents(AppLockConstants.PASSWORD_CHECK_SCREEN, "Correct Password", "correct_password", "");
                 } else {
+                    if(sharedPreferences.getBoolean(APPLockConstants.IS_SWITCH,false)) {
+                        int nooftimewrong = sharedPreferences.getInt(APPLockConstants.NO_OF_TIMES_PASSWORD_FALSE, 0);
+                        if (nooftimewrong >= 2) {
+                            Intent intent = new Intent(getBaseContext(), picturered.class);
+                            startActivity(intent);
+                            onStop();
+
+                        }
+
+
+                        editor.putInt(APPLockConstants.NO_OF_TIMES_PASSWORD_FALSE, nooftimewrong + 1);
+                        editor.apply();
+                    }
                     Toast.makeText(getApplicationContext(), "Wrong Pattern Try Again", Toast.LENGTH_SHORT).show();
                   //  AppLockLogEvents.logEvents(AppLockConstants.PASSWORD_CHECK_SCREEN, "Wrong Password", "wrong_password", "");
                 }

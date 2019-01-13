@@ -50,7 +50,7 @@ public class snsAdapter extends BaseAdapter {
         View inflatedView;
         LayoutInflater li = LayoutInflater.from(ctx);
         if(convertView==null) {
-            inflatedView = li.inflate(R.layout.list_chamber, parent, false);
+            inflatedView = li.inflate(R.layout.chamber_sns, parent, false);
             holder = new SuperHeroHolder();
 
             holder.imageView = inflatedView.findViewById(R.id.image_sns);

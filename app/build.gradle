@@ -36,4 +36,7 @@ dependencies {
     }
     implementation 'com.google.android.gms:play-services-analytics:16.0.4'
     implementation 	'com.google.android.gms:play-services-gcm:16.0.0'
+    compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
+    // Optional, for RxJava2 adapter
+    compile 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
 }

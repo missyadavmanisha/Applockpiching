@@ -22,15 +22,7 @@ public class pagerAdapter extends FragmentPagerAdapter {
 
 
             case 1:
-              return  FragmentA .newInstance(APPLockConstants.LOCKED);
-
-
-            case 2:
-                return  FragmentA .newInstance(APPLockConstants.UNLOCKED);
-
-
-            case 3:
-                return new FragmentD();
+                return new FragmentC();
 
         }
         return null;
@@ -38,7 +30,7 @@ public class pagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 2;
     }
 
     @Nullable
@@ -47,13 +39,9 @@ public class pagerAdapter extends FragmentPagerAdapter {
      switch (position)
      {
          case 0:
-             return "All apps";
+             return "PRIVICY";
          case 1:
-             return "Locked apps";
-         case 2:
-             return "unlock apps";
-         case 3:
-             return "Settings";
+             return "PROTECT";
      }
      return "";
     }

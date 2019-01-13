@@ -23,7 +23,14 @@ public class unblocksetting extends AppCompatActivity {
                 startActivity(i);
             }
         });
-       
+        password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(unblocksetting.this,PinViewset.class);
+                startActivity(i);
+            }
+        });
+
 
 
     }

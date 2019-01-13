@@ -44,10 +44,6 @@ public class PasswordSetActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(APPLockConstants.MyPREFERENCES, MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        //Google Analytics
-        Tracker t = ((AppLockApplication) getApplication()).getTracker(AppLockApplication.TrackerName.APP_TRACKER);
-        t.setScreenName(APPLockConstants.FIRST_TIME_PASSWORD_SET_SCREEN);
-        t.send(new HitBuilders.AppViewBuilder().build());
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override

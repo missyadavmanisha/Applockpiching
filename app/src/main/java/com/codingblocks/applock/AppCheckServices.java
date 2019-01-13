@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
@@ -29,15 +30,15 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.takwolf.android.lock9.Lock9View;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
-/**
- * Created by amitshekhar on 28/04/15.
- */
+
 public class AppCheckServices extends Service {
 
     public static final String TAG = "AppCheckServices";
@@ -50,6 +51,9 @@ public class AppCheckServices extends Service {
     public static String previousApp = "";
     SharedPreferences sharedPreference;
     List<String> pakageName;
+    Set<String > strings;
+    Set<String> strings1;
+    List<String> list;
 
     @Override
     public void onCreate() {
@@ -57,19 +61,24 @@ public class AppCheckServices extends Service {
         context = getApplicationContext();
         sharedPreference = getSharedPreferences(APPLockConstants.MyPREFERENCES,MODE_PRIVATE);
         if (sharedPreference != null) {
-            pakageName = (List<String>)sharedPreference.getStringSet(APPLockConstants.LOCKED,null);
+             strings=sharedPreference.getStringSet(APPLockConstants.LOCKED,null);
+             if(strings!=null) {
+                 list = new ArrayList<>(strings);
 
+                 pakageName = list;
+             }
         }
+
+
+
         timer = new Timer("AppCheckServices");
         timer.schedule(updateTask, 100L, 100L);
 
-        final Tracker t = ((AppLockApplication) getApplication()).getTracker(AppLockApplication.TrackerName.APP_TRACKER);
-        t.setScreenName(APPLockConstants.APP_LOCK);
-        t.send(new HitBuilders.AppViewBuilder().build());
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         imageView = new ImageView(this);
         imageView.setVisibility(View.GONE);
+
 
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -83,13 +92,19 @@ public class AppCheckServices extends Service {
         params.y = ((getApplicationContext().getResources().getDisplayMetrics().heightPixels) / 2);
         windowManager.addView(imageView, params);
 
+
     }
 
     private TimerTask updateTask = new TimerTask() {
         @Override
         public void run() {
             if (sharedPreference != null) {
-                pakageName = (List<String >)sharedPreference.getStringSet(APPLockConstants.LOCKED,null);
+                strings1=sharedPreference.getStringSet(APPLockConstants.LOCKED,null);
+                if(strings1!=null) {
+                    list = new ArrayList<>(strings1);
+                    pakageName = list;
+                }
+
             }
             if (isConcernedAppIsInForeground()) {
                 if (imageView != null) {
@@ -217,6 +232,7 @@ public class AppCheckServices extends Service {
                 for (int i = 0; pakageName != null && i < pakageName.size(); i++) {
                     if (componentInfo.getPackageName().equals(pakageName.get(i))) {
                         currentApp = pakageName.get(i);
+                        showUnlockDialog(); ;
                         return true;
                     }
                 }
@@ -244,11 +260,32 @@ public class AppCheckServices extends Service {
             for (int i = 0; pakageName != null && i < pakageName.size(); i++) {
                 if (mpackageName.equals(pakageName.get(i))) {
                     currentApp = pakageName.get(i);
+                    showUnlockDialog();
                     return true;
                 }
             }
         }
         return false;
+       /* ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        List l = am.getRecentTasks(4, ActivityManager.RECENT_WITH_EXCLUDED);
+        if(l!=null) {
+            Iterator i = l.iterator();
+            PackageManager pm = this.getPackageManager();
+            while (i.hasNext()) {
+                ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
+                try {
+                    CharSequence c = pm.getApplicationLabel(pm.getApplicationInfo(
+                            info.processName, PackageManager.GET_META_DATA));
+                    Log.e("LABEL", c.toString());
+
+
+                } catch (Exception e) {
+                    Log.e("SERTIIYUR", "not fount");
+                    // Name Not FOund Exception
+                }
+            }
+        }
+        return  true;*/
     }
 
     @Override

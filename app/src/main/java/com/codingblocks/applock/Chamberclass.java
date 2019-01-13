@@ -17,7 +17,7 @@ public class Chamberclass extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chamber_xml) ;
+        setContentView(R.layout.chamber) ;
         Resources res = getResources();
 
         Drawable drawable=res.getDrawable(R.drawable.broser);
@@ -51,8 +51,12 @@ public class Chamberclass extends AppCompatActivity {
                 }
                 if(position==2)
                 {
-Intent intent=new Intent();
+                   Intent intent=new Intent(Chamberclass.this,intruderselfie.class);
+                  startActivity(intent);
+
                 }
+
+
             }
         });
 

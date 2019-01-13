@@ -17,16 +17,19 @@ public class webview extends AppCompatActivity {
     EditText editText;
     ImageButton  button;
     WebView wv;
+    String url;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_view) ;
-        editText=findViewById(R.id.web_edit);
-        button=findViewById(R.id.web_button);
         wv=findViewById(R.id.web_view);
-       String url1=editText.getText().toString();
-       final String url="https://www.google.com/search?q="+""+url1;
-        Log.e("TAG",url);
+        setContentView(R.layout.web_view);
+            editText = findViewById(R.id.web_edit);
+            button = findViewById(R.id.web_button);
+            String url1 = editText.getText().toString();
+             url = "https://www.google.com/search?q=" + "" + url1;
+            Log.e("TAG", url);
+
 
 
 

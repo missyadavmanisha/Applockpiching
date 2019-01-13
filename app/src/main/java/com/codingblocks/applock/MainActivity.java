@@ -1,5 +1,6 @@
 package com.codingblocks.applock;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +15,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -59,15 +62,24 @@ public class MainActivity extends AppCompatActivity
 
         numOfTimesAppOpened = sharedPreferences.getLong(APPLockConstants.NUM_OF_TIMES_APP_OPENED, 0) + 1;
         isRated = sharedPreferences.getBoolean(APPLockConstants.IS_RATED, false);
-        editor.putLong(APPLockConstants.NUM_OF_TIMES_APP_OPENED, numOfTimesAppOpened);
+        editor.putLong(APPLockConstants.NUM_OF_TIMES_APP_OPENED, numOfTimesAppOpened+1);
         editor.apply();
          Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW,
+                },
+                12345);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SYSTEM_ALERT_WINDOW) != PackageManager.PERMISSION_GRANTED)
+        {
+
+        }
 
         ViewPager viewPager=findViewById(R.id.viewpager);
 
         pagerAdapter pagerAdapter = new pagerAdapter(getSupportFragmentManager());
-        TabLayout tabLayout=findViewById(R.id.tablayout);
+       TabLayout tabLayout=findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
         viewPager.setAdapter(pagerAdapter);
